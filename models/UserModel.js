@@ -3,7 +3,10 @@ import mongoose from "mongoose";
 const UserSchema = new mongoose.Schema(
   {
     name: String,
-    email: String,
+    email: {
+      type: String,
+      unique: true,
+    },
     password: String,
     lastName: {
       type: String,
@@ -17,7 +20,10 @@ const UserSchema = new mongoose.Schema(
       type: String,
       enum: ["user", "admin"],
       default: "user",
+      required: true,
     },
   },
   { timestamps: true }
 );
+
+export default mongoose.model("User", UserSchema);

@@ -8,6 +8,7 @@ import {
   updateJob,
   deleteJob,
 } from "../controllers/jobController.js";
+
 import { validateJobInput, validateIdParam } from "../middleware/validationMiddleware.js";
 import { validationResult } from "express-validator";
 
