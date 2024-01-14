@@ -3,6 +3,7 @@ import User from "../models/UserModel.js";
 import { comparePassword, hashPassword } from "../utils/passwordUtils.js";
 import { UnauthenticatedError } from "../errors/customErrors.js";
 import { createJWT } from "../utils/tokenUtils.js";
+import { ieNoOpen } from "helmet";
 
 // Register
 export const register = async (req, res) => {
@@ -38,5 +39,14 @@ export const login = async (req, res) => {
   // Jwt token created and sending encrypted info to the server
   const token = createJWT({ userId: user._id, role: user.role });
 
-  res.json({ token });
+  const oneDay = 1000 * 60 * 60 * 24;
+
+  res.cookie("token", token, { // cookie is a method
+    httpOnly: true,
+    expires: new Date(Date.now() + oneDay),
+    // while developing its in http and in production its going to be in https means secure property will be true
+    secure: process.env.NODE_ENV === "production",
+  });
+
+  res.status(StatusCodes.OK).json({ msg: "user logged in " });
 };

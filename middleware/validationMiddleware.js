@@ -68,6 +68,7 @@ export const validateRegisterInput = withValidationErrors([
   body("location").notEmpty().withMessage("Location is required"),
 ]);
 
+
 export const validateLoginInput = withValidationErrors([
   body("email")
     .notEmpty()
