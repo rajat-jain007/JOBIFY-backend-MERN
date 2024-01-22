@@ -19,7 +19,7 @@ import authRouter from "./routes/authRouter.js";
 
 // middleware
 import errorHandlerMiddleware from "./middleware/errorHandlerMiddleware.js";
-import  {authenticateUser}  from "./middleware/authMiddleware.js";
+import { authenticateUser } from "./middleware/authMiddleware.js";
 // try {
 //   const response = await fetch(
 //     "https://www.course-api.com/react-useReducer-cart-project"
@@ -42,7 +42,6 @@ app.use(express.json());
 app.get("/", (req, res) => {
   res.send("Hello World");
 });
-
 
 // authenticateUser protects/checks before accessing jobRouter(all jobs).
 app.use("/api/v1/jobs", authenticateUser, jobRouter);

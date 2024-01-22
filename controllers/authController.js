@@ -3,7 +3,8 @@ import User from "../models/UserModel.js";
 import { comparePassword, hashPassword } from "../utils/passwordUtils.js";
 import { UnauthenticatedError } from "../errors/customErrors.js";
 import { createJWT } from "../utils/tokenUtils.js";
-import { ieNoOpen } from "helmet";
+import cookieParser from "cookie-parser";
+
 
 // Register
 export const register = async (req, res) => {
@@ -41,7 +42,8 @@ export const login = async (req, res) => {
 
   const oneDay = 1000 * 60 * 60 * 24;
 
-  res.cookie("token", token, { // cookie is a method
+  res.cookie("token", token, {
+    // cookie is a method
     httpOnly: true,
     expires: new Date(Date.now() + oneDay),
     // while developing its in http and in production its going to be in https means secure property will be true

@@ -4,13 +4,16 @@ import { StatusCodes } from "http-status-codes";
 // GET ALL JOBS
 
 export const getAllJobs = async (req, res) => {
-  const jobs = await Job.find({});
+  // when the user make request with a cookie with a token, we only provide jobs that belong to specific user.
+  const jobs = await Job.find({ createdBy: req.user.userId });
   // instead of writing status(200) code replacing it with StatusCodes.OK (OK means status(200)) library. Check Docs in status code npm js
   res.status(StatusCodes.OK).json({ jobs });
 };
 
 // CREATE JOB
 export const createJob = async (req, res) => {
+  // the createdBy from jobModel referred here.
+  req.body.createdBy = req.user.userId;
   const job = await Job.create(req.body);
   // instead of writing status(200) code replacing it with StatusCodes.CREATED (CREATED means status(201)) library. Check Docs in npm js
   res.status(StatusCodes.CREATED).json({ job });
